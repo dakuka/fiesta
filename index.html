@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Celeste &amp; Daniel · La fiesta · 24.10.2026</title>
+<meta name="description" content="Tocá para abrir la invitación">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Celeste &amp; Daniel · La fiesta · 24.10.2026">
+<meta property="og:description" content="Tocá para abrir la invitación">
+<meta property="og:image" content="https://dakuka.github.io/fiesta/img/og.jpg?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://dakuka.github.io/fiesta/">
+<link rel="icon" type="image/png" href="img/icono.png">
+<meta name="theme-color" content="#060B1F">
+<!-- liviana (15-oct): la letra Forum va en el sitio (sin Google Fonts) y el fondo de la entrada se pide primero -->
+<link rel="preload" href="fonts/forum.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="img/azul_puertas.jpg" as="image" fetchpriority="high">
+<style>
+  /* Forum (OFL): el mismo archivo woff2 que servia fonts.gstatic.com para este texto (subconjunto latin) */
+  @font-face { font-family: 'Forum'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/forum.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  /* Todo se mide en puntos del PDF original de Historias: 1000 pt = ancho de la invitacion (igual que la oficial) */
+  :root {
+    --W: min(100vw, 520px);
+    --u: calc(var(--W) / 1000);
+    --azul: #23254E;      /* textos azules y botones del PDF (vestidor) */
+    --gris: #616161;      /* textos grises del PDF (vestidor) */
+    --sobre: #010D3D;
+    --pliegue: #364064;
+    --lacre: #9D7C5A;     /* lacre bronce */
+    --margen: #28344E;    /* azul de los margenes de la invitacion */
+    /* version noche: el azul pasa a dorado bronce y el gris a champagne */
+    --noche: #060B1F;
+    --crema: #EFE4CF;     /* textos (antes gris) */
+    --oro: #D2B183;       /* nombres, numeros, adornos (antes azul) */
+    --linea: #B99A63;     /* rayas y bordes de las pildoras */
+    --sale: cubic-bezier(.16, 1, .3, 1);
+    --velo: radial-gradient(130% 85% at 50% 26%, rgba(4, 10, 34, .55) 0%, rgba(2, 6, 22, .9) 70%, rgba(1, 4, 16, .97) 100%);
+    /* grabado de noche: claro sobre oscuro engorda la letra; con .12u el Forum HTML pesa igual que los bloques del PDF recoloreados (medido) */
+    --trazo: calc(.12 * var(--u));
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { background: var(--noche); }
+  body { -webkit-tap-highlight-color: transparent; }   /* sin fondo propio: asi se ve el azul C&D fijo de atras */
+  body.cerrado { overflow: hidden; height: 100%; }
+  ::selection { background: rgba(210, 177, 131, .4); color: #fff; }
+
+  /* Papel de noche: el azul C&D quieto detras, como un salon a media luz */
+  .noche { position: fixed; left: 0; top: 0; width: 100%; height: 100vh; height: 100lvh; z-index: -1; background: var(--noche) url(img/azul_puertas.jpg) center / cover no-repeat; }
+  .noche::after { content: ""; position: absolute; inset: 0; background: var(--velo); opacity: .74; }
+
+  /* ---------------- Invitacion ---------------- */
+  .inv { position: relative; width: var(--W); height: calc(4680 * var(--u)); margin: 0 auto; font-family: 'Forum', serif; }
+  .rev { opacity: 0; transform: translateY(calc(26 * var(--u))); transition: opacity 1.2s var(--sale), transform 1.4s var(--sale); }
+  .rev.vis { opacity: 1; transform: none; }
+
+  /* Bloques de texto del PDF recoloreados por mascara (la caligrafia no existe como fuente) */
+  .m { position: absolute; left: calc(150 * var(--u)); width: calc(700 * var(--u)); background: var(--crema);
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: 100% auto; mask-size: 100% auto; -webkit-mask-position: 50% 0; mask-position: 50% 0; }
+  .m.oro { background: var(--oro); }
+  .m.linea { background: var(--linea); }
+  .m01 { -webkit-mask-image: url(img/b01.webp); mask-image: url(img/b01.webp); height: calc(80 * var(--u)); }
+  .m02 { -webkit-mask-image: url(img/b02.webp); mask-image: url(img/b02.webp); height: calc(220 * var(--u)); }
+  .m05 { -webkit-mask-image: url(img/b05.webp); mask-image: url(img/b05.webp); height: calc(150 * var(--u)); }
+  .m07 { -webkit-mask-image: url(img/b07.webp); mask-image: url(img/b07.webp); height: calc(110 * var(--u)); }
+  .m08 { -webkit-mask-image: url(img/b08.webp); mask-image: url(img/b08.webp); height: calc(60 * var(--u)); }  /* solo "Tenida elegante": el boton va en HTML */
+  .m09 { -webkit-mask-image: url(img/b09.webp); mask-image: url(img/b09.webp); height: calc(40 * var(--u)); }
+  .m12 { -webkit-mask-image: url(img/b12.webp); mask-image: url(img/b12.webp); height: calc(140 * var(--u)); }
+  .m13 { -webkit-mask-image: url(img/b13.webp); mask-image: url(img/b13.webp); height: calc(150 * var(--u)); }
+
+  /* Texto nuevo en Forum: medido contra b03 (mismo cuerpo, tracking, grabado y renglones) */
+  .txt3 { position: absolute; left: 0; width: 100%; padding-top: calc(5.5 * var(--u)); text-align: center; color: var(--crema);
+    font-size: calc(28.5 * var(--u)); line-height: calc(54.17 * var(--u)); letter-spacing: .24em; -webkit-text-stroke: var(--trazo) currentColor; margin: 0; font-weight: 400; }
+  .txt3 span { display: block; padding-left: .24em; white-space: nowrap; }
+
+  /* Fecha nueva en HTML: medida contra b04 (columnas, raya, numero grande, palabras chicas) */
+  .fecha { position: absolute; left: 0; width: 100%; height: calc(230 * var(--u)); -webkit-text-stroke: var(--trazo) currentColor; }
+  .fecha .fcol { position: absolute; top: 0; width: calc(500 * var(--u)); height: 100%; text-align: center; }
+  .fecha .izq { left: calc(101.7 * var(--u)); }
+  .fecha .der { left: calc(412.1 * var(--u)); }
+  .fecha .fw, .fecha .fn { position: absolute; left: 0; width: 100%; line-height: 1; white-space: nowrap; }
+  .fecha .fw { font-size: calc(30.6 * var(--u)); letter-spacing: .24em; padding-left: .24em; color: var(--crema); }
+  .fecha .f1 { top: calc(24.17 * var(--u)); }
+  .fecha .f3 { top: calc(170.77 * var(--u)); }
+  .fecha .fn { top: calc(64.37 * var(--u)); margin-left: calc(-3.75 * var(--u)); font-size: calc(93.5 * var(--u)); letter-spacing: .158em; padding-left: .158em; color: var(--oro); }
+  .fecha .fraya { position: absolute; left: calc(513.2 * var(--u)); width: calc(2.215 * var(--u)); top: calc(22.5 * var(--u)); height: calc(180.8 * var(--u)); background: var(--linea); }
+
+  /* Cuenta regresiva: la de la oficial, en champagne y oro */
+  .cuenta { position: absolute; left: 0; width: 100%; height: calc(300 * var(--u)); text-align: center; color: var(--crema); -webkit-text-stroke: var(--trazo) currentColor; }
+  .cuenta .raya { position: absolute; left: calc(466.8 * var(--u)); width: calc(66.4 * var(--u)); top: calc(40 * var(--u)); height: calc(1.735 * var(--u)); background: var(--linea); }
+  .cuenta .titulo { position: absolute; left: 0; width: 100%; top: calc(82 * var(--u)); font-size: calc(28.5 * var(--u)); letter-spacing: .24em; padding-left: .24em; line-height: 1; }
+  .cuenta .fila { position: absolute; left: calc(170 * var(--u)); width: calc(660 * var(--u)); top: calc(140 * var(--u)); display: flex; }
+  .cuenta .col { width: 25%; position: relative; }
+  .cuenta .col + .col::before { content: ""; position: absolute; left: 0; top: calc(2 * var(--u)); width: calc(2.215 * var(--u)); height: calc(118 * var(--u)); background: var(--linea); }
+  .cuenta .num { display: block; font-size: calc(72 * var(--u)); line-height: 1; color: var(--oro); letter-spacing: .06em; padding-left: .06em; font-variant-numeric: tabular-nums; }
+  .cuenta .lbl { display: block; margin-top: calc(14 * var(--u)); font-size: calc(20 * var(--u)); letter-spacing: .24em; padding-left: .24em; }
+
+  /* Pildoras (estilo .pildora de la oficial, borde bronce). La zona tactil crece a 44 px sin cambiar el dibujo */
+  .pildora {
+    position: absolute; display: flex; align-items: center; justify-content: center;
+    height: calc(46.5 * var(--u)); border: calc(1.735 * var(--u)) solid var(--linea); border-radius: 999px;
+    color: var(--crema); text-decoration: none; font-size: calc(18.6 * var(--u)); letter-spacing: .24em; padding-left: .24em;
+    -webkit-text-stroke: var(--trazo) currentColor; white-space: nowrap;
+    transition: opacity 1.2s var(--sale), transform 1.4s var(--sale), background-color .4s var(--sale), border-color .4s var(--sale);
+  }
+  .pildora::after { content: ""; position: absolute; left: -6px; right: -6px; top: 50%; height: max(44px, 100%); transform: translateY(-50%); border-radius: 999px; }
+  .pildora:active { background: rgba(210, 177, 131, .14); transform: scale(.97); }
+  @media (hover: hover) { .pildora:hover { border-color: var(--oro); background: rgba(210, 177, 131, .08); } }
+  .pildora:focus-visible { outline: 2px solid var(--crema); outline-offset: 4px; }
+
+  /* Cierre */
+  /* monograma CD en oro con el relieve del lacre (luz arriba a la izquierda) */
+  .mono-fin { position: absolute; left: calc(425 * var(--u)); width: calc(150 * var(--u)); height: calc(200 * var(--u));
+    filter: drop-shadow(calc(-.9 * var(--u)) calc(-.9 * var(--u)) 0 rgba(255, 240, 214, .35)) drop-shadow(calc(1.2 * var(--u)) calc(1.4 * var(--u)) 0 rgba(0, 0, 0, .55)); }
+  .mono-fin::before { content: ""; position: absolute; inset: 0; background: var(--oro);
+    -webkit-mask: url(img/monograma_lacre.webp) center / contain no-repeat; mask: url(img/monograma_lacre.webp) center / contain no-repeat; }
+
+  /* Papel de noche: filete doble bronce, como las puertas del vestidor */
+  .marco { position: absolute; left: calc(40 * var(--u)); width: calc(920 * var(--u)); top: calc(1060 * var(--u)); height: calc(3540 * var(--u));
+    border: calc(1.735 * var(--u)) solid rgba(185, 154, 99, .5); pointer-events: none; opacity: 0; transition: opacity 2.4s var(--sale) .5s; }
+  .marco::before { content: ""; position: absolute; inset: calc(14 * var(--u)); border: calc(.9 * var(--u)) solid rgba(185, 154, 99, .28); }
+  body.abierta .marco { opacity: 1; }
+
+  /* ---------------- La bola de espejos (encabezado) ---------------- */
+  .escena { position: absolute; left: 0; top: 0; width: 100%; height: calc(1060 * var(--u)); pointer-events: none; z-index: 52; }
+  body.lista .escena { z-index: auto; }
+  #bola { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  /* medallon = el lacre de la oficial (misma mascara y relieve), enhebrado en la cadena como emblema: no toca la bola */
+  .medallon { position: absolute; left: calc(445 * var(--u)); top: calc(120 * var(--u)); width: calc(110 * var(--u)); height: calc(110 * var(--u)); --sw: calc(407.4 * var(--u)); }
+  .medallon .lacre { position: absolute; inset: 0; border-radius: 50%; background: var(--lacre);
+    box-shadow: inset 0 0 0 calc(var(--sw) * .006) #8B6C4C, 0 calc(3 * var(--u)) calc(11 * var(--u)) rgba(0, 0, 0, .55); }
+  .medallon .lacre::before { content: ""; position: absolute; inset: 6.5%; border-radius: 50%; border: calc(var(--sw) * .004) solid #85664A; }
+  .medallon .lacre .cd { position: absolute; inset: 15%;
+    filter: drop-shadow(calc(var(--sw) * -.0017) calc(var(--sw) * -.0017) 0 rgba(242, 222, 192, .55)) drop-shadow(calc(var(--sw) * .0017) calc(var(--sw) * .0017) 0 rgba(66, 44, 24, .4)); }
+  .medallon .lacre .cd::before {
+    content: ""; position: absolute; inset: 0; background: #8C6C4E;
+    -webkit-mask: url(img/monograma_lacre.webp) center / contain no-repeat; mask: url(img/monograma_lacre.webp) center / contain no-repeat;
+  }
+  /* cuando se enciende el haz, el lacre toma un brillo calido arriba a la izquierda (de donde viene la luz) */
+  .medallon::after { content: ""; position: absolute; inset: 0; border-radius: 50%; opacity: .12; transition: opacity 1.6s var(--sale);
+    background: radial-gradient(circle at 30% 26%, rgba(255, 238, 206, .55), rgba(255, 238, 206, 0) 58%); }
+  body.encendida .medallon::after { opacity: 1; }
+  .medallon { filter: brightness(.62); transition: filter 1.6s var(--sale); }
+  body.encendida .medallon { filter: none; }
+
+  /* Reflejos que siguen pasando, muy suaves, sobre la invitacion */
+  /* screen: la luz solo aclara (sobre el azul y sobre los textos), nunca deja una mancha gris */
+  #reflejos { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 2.5s var(--sale); mix-blend-mode: screen; }
+  body.abierta #reflejos { opacity: 1; }
+  #reflejos i { position: absolute; left: 0; top: var(--y); width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+    animation: barrido var(--d) cubic-bezier(.2, .62, .8, .38) var(--r) infinite; will-change: transform; }
+  #reflejos b { position: absolute; inset: 0; border-radius: 50%; opacity: 0;
+    /* ambar saturado: un centro casi blanco sobre azul a baja opacidad se lee gris (medido); asi queda dorado */
+    background: radial-gradient(circle, rgba(255, 200, 112, 1) 0, rgba(252, 186, 92, .9) 18%, rgba(240, 168, 74, .42) 36%, rgba(240, 168, 74, 0) 58%);
+    animation: titila var(--d) linear var(--r) infinite; }
+  @keyframes barrido { from { transform: translateX(-8vw) scaleX(1.6); } 50% { transform: translateX(50vw) scaleX(1); } to { transform: translateX(108vw) scaleX(1.6); } }
+  @keyframes titila { 0% { opacity: 0; } 16% { opacity: var(--o); } 84% { opacity: var(--o); } 100% { opacity: 0; } }
+  html.quieto #reflejos i, html.quieto #reflejos b { animation-play-state: paused; }
+
+  /* Musica: boton flotante de pausa / play (igual a la oficial) */
+  #musica { position: fixed; bottom: calc(16px + env(safe-area-inset-bottom)); right: max(14px, calc(50% - var(--W) / 2 + 14px)); z-index: 45; width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid var(--lacre); background: rgba(35, 37, 78, .9); box-shadow: 0 3px 10px rgba(10, 14, 30, .35); padding: 0; cursor: pointer; display: none;
+    align-items: center; justify-content: center; -webkit-tap-highlight-color: transparent; }
+  #musica.ver { display: flex; }
+  #musica svg { width: 18px; height: 18px; fill: #e2cfaa; }
+  #musica .ic-play { display: none; } #musica.pausada .ic-play { display: block; } #musica.pausada .ic-pausa { display: none; }
+  #musica:not(.pausada)::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid rgba(157, 124, 90, .55); animation: onda-musica 2.4s ease-out infinite; }
+  #musica:focus-visible { outline: 2px solid var(--crema); outline-offset: 3px; }
+  @keyframes onda-musica { from { transform: scale(.85); opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
+
+  /* ---------------- Entrada: salon a oscuras con la bola ---------------- */
+  #intro {
+    position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    /* la llamada va pegada a la bola (una sola composicion); en horizontal no se cae de la pantalla */
+    padding-top: min(calc(855 * var(--u) + 46px), calc(100vh - 72px)); padding-top: min(calc(855 * var(--u) + 46px), calc(100svh - 72px)); cursor: pointer; transition: opacity 1.1s var(--sale); font-family: 'Forum', serif; outline: none; overflow: hidden;
+  }
+  #intro .sala { position: absolute; left: 0; top: 0; width: 100%; height: 100vh; height: 100lvh; background: var(--noche) url(img/azul_puertas.jpg) center / cover no-repeat; }
+  #intro .sala::after { content: ""; position: absolute; inset: 0; background: var(--velo); opacity: 1; transition: opacity 2s var(--sale); }
+  #intro.encendida .sala::after { opacity: .74; }
+  #destellos { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; }
+  #intro.fuera { opacity: 0; pointer-events: none; }
+  .toca { position: relative; margin: 0; color: var(--crema); font-size: 13px; letter-spacing: .32em; padding-left: .32em; animation: latido 2.2s cubic-bezier(.45, 0, .55, 1) infinite; }
+  #intro:focus-visible .toca { outline: 1px solid rgba(239, 228, 207, .7); outline-offset: 10px; }
+  @keyframes latido { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+  #intro.encendida .toca { opacity: 0; animation: none; transition: opacity .35s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rev { transform: none; transition: opacity .8s var(--sale); }
+    #reflejos i, #reflejos b { animation: none; }
+    #reflejos i { transform: translateX(var(--x)); }
+    #reflejos b { opacity: var(--o); }
+    .toca { animation: none; opacity: .85; }
+    #musica:not(.pausada)::after { animation: none; opacity: 0; }
+  }
+
+  /* ---------------- Tenida elegante: pagina dentro de la pagina con el vestidor (copia de la oficial) ---------------- */
+  #tenida { position: fixed; inset: 0; z-index: 60; background: var(--margen); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+    opacity: 0; pointer-events: none; transition: opacity .35s ease; --oro: #B99A63; color-scheme: light; }
+  #tenida.ver { opacity: 1; pointer-events: auto; }
+  #tenida .hoja { position: relative; width: var(--W); height: calc(1780 * var(--u)); min-height: 100vh; min-height: 100dvh; margin: 0 auto;
+    font-family: 'Forum', serif; color: var(--gris); text-align: center;
+    background: 0 calc(-1280 * var(--u)) / 100% auto no-repeat; -webkit-text-stroke: calc(.707 * var(--u)) currentColor; }
+  #tenida.cargado .hoja { background-image: url(img/fondo.jpg); }
+  #tenida .t { position: absolute; left: 0; width: 100%; letter-spacing: .24em; padding-left: .24em; line-height: 1; }
+  #tenida .titulo { font-size: calc(34 * var(--u)); }
+  #tenida .raya { position: absolute; left: calc(466.8 * var(--u)); width: calc(66.4 * var(--u)); height: calc(1.735 * var(--u)); background: var(--azul); }
+  #tenida .volver { position: absolute; left: calc(130 * var(--u)); top: calc(34 * var(--u)); z-index: 20; padding: calc(10 * var(--u)) calc(16 * var(--u));
+    background: none; border: 0; cursor: pointer; font-family: inherit; font-size: calc(17 * var(--u)); letter-spacing: .2em; color: var(--azul); -webkit-text-stroke: inherit; }
+  #tenida .pista { font-size: calc(17 * var(--u)); letter-spacing: .28em; padding-left: .28em; animation: latido 2.2s ease-in-out infinite; }
+  #tenida .cols { position: absolute; left: calc(170 * var(--u)); width: calc(660 * var(--u)); display: flex; }
+  #tenida .cols > div { flex: 1; }
+  #tenida .cols > div + div { border-left: calc(2.215 * var(--u)) solid var(--azul); }
+  #tenida .cols .e { display: block; font-size: calc(19 * var(--u)); letter-spacing: .24em; padding-left: .24em; }
+  #tenida .cols .p { display: block; margin-top: calc(16 * var(--u)); font-size: calc(28 * var(--u)); color: var(--azul); letter-spacing: .08em; padding-left: .08em; }
+  #tenida .paleta { position: absolute; left: calc(210 * var(--u)); width: calc(580 * var(--u)); top: calc(1215 * var(--u)); mix-blend-mode: multiply; }
+  #tenida .mono { position: absolute; left: calc(410 * var(--u)); width: calc(180 * var(--u)); height: calc(240 * var(--u)); background: #8e8e8e; /* un poco mas legible (pedido de Daniel 24-sep), mismo grabado */
+    display: none; /* liviana: hasta que se cargue el vestidor no existe, asi su imagen no se baja con la pagina */
+    -webkit-mask: url(img/monograma.webp) center / contain no-repeat; mask: url(img/monograma.webp) center / contain no-repeat;
+    filter: drop-shadow(1px 1px 0 rgba(255, 255, 255, .9)) drop-shadow(-1px -1px 1px rgba(0, 0, 0, .12)); }
+  #tenida.cargado .mono { display: block; }
+  /* placard de 780 x 582 (proporcion del dibujo); puertas = el mismo azul C&D de la invitacion y a la misma escala */
+  #tenida .armario { position: absolute; left: calc(110 * var(--u)); top: calc(270 * var(--u)); width: calc(780 * var(--u)); height: calc(582 * var(--u));
+    perspective: calc(2200 * var(--u)); cursor: pointer; -webkit-text-stroke: 0; }
+  #tenida .fondo-armario { position: absolute; inset: 0; background: #f7f5f1; box-shadow: inset 0 0 calc(40 * var(--u)) rgba(35, 37, 78, .18); }
+  #tenida .ropa { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .6s ease .35s; mix-blend-mode: multiply; }
+  #tenida .abierto .ropa { opacity: 1; }
+  #tenida .puerta { position: absolute; top: 0; width: 50%; height: 100%; background: var(--margen) 0 0 / calc(780 * var(--u)) auto no-repeat; background-origin: border-box;
+    border: calc(3 * var(--u)) solid var(--oro); transition: transform 1.3s cubic-bezier(.55, .05, .25, 1); transform-style: preserve-3d;
+    box-shadow: 0 calc(8 * var(--u)) calc(22 * var(--u)) rgba(10, 14, 30, .35); }
+  #tenida.cargado .puerta { background-image: url(img/azul_puertas.jpg); }
+  #tenida .puerta::before { content: ""; position: absolute; inset: calc(22 * var(--u)); border: calc(1.6 * var(--u)) solid rgba(185, 154, 99, .75); pointer-events: none; }
+  #tenida .puerta.izq { left: 0; transform-origin: 0 50%; }
+  #tenida .puerta.der { right: 0; transform-origin: 100% 50%; background-position: calc(-390 * var(--u)) 0; }
+  #tenida .abierto .puerta.izq { transform: rotateY(-112deg); }
+  #tenida .abierto .puerta.der { transform: rotateY(112deg); }
+  #tenida .manija { position: absolute; top: 47%; width: calc(26 * var(--u)); height: calc(26 * var(--u)); border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #f3e2b8, #b99a63 55%, #7d6236); box-shadow: 0 1px 3px rgba(0, 0, 0, .5); }
+  #tenida .izq .manija { right: calc(22 * var(--u)); }
+  #tenida .der .manija { left: calc(22 * var(--u)); }
+  #tenida .prenda { position: absolute; top: 18%; height: 72%; background: none; border: 0; padding: 0; cursor: pointer; display: none; }
+  #tenida .abierto .prenda { display: block; }
+  #tenida .etq { position: absolute; top: 3%; transform: translateX(-50%) scale(.6); opacity: 0; transition: all .35s cubic-bezier(.2, .8, .2, 1.2); pointer-events: none;
+    background: #fff; color: var(--azul); border: calc(1.735 * var(--u)) solid var(--azul); border-radius: 999px; padding: calc(8 * var(--u)) calc(22 * var(--u));
+    font-size: calc(19 * var(--u)); letter-spacing: .18em; white-space: nowrap; box-shadow: 0 calc(4 * var(--u)) calc(12 * var(--u)) rgba(35, 37, 78, .2); }
+  #tenida .etq.ver { opacity: 1; transform: translateX(-50%) scale(1); }
+  #tenida .etq small { display: block; font-size: calc(13 * var(--u)); color: var(--gris); letter-spacing: .16em; margin-top: calc(4 * var(--u)); }
+  #tenida .volver:focus-visible, #tenida .prenda:focus-visible, #tenida .armario:focus-visible { outline: 2px solid var(--azul); outline-offset: 3px; }
+</style>
+</head>
+<body class="cerrado">
+
+<div class="noche" aria-hidden="true"></div>
+
+<!-- ================= Entrada: el salon a oscuras ================= -->
+<div id="intro" role="button" tabindex="0" aria-label="Tocá para encender la bola y abrir la invitación">
+  <div class="sala"></div>
+  <canvas id="destellos" aria-hidden="true"></canvas>
+  <p class="toca">TOCÁ PARA ENCENDER</p>
+</div>
+
+<button id="musica" class="pausada" aria-label="Pausar o reproducir la música">
+  <svg class="ic-pausa" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+  <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+</button>
+
+<!-- ================= Invitacion ================= -->
+<main class="inv">
+  <div class="escena" id="escena" aria-hidden="true">
+    <canvas id="bola"></canvas>
+    <div class="medallon"><div class="lacre"><span class="cd"></span></div></div>
+  </div>
+  <div class="marco" aria-hidden="true"></div>
+
+  <div class="m m01 rev" role="img" aria-label="¡Nos casamos!" style="top: calc(1150 * var(--u))"></div>
+  <div class="m m02 oro rev" role="img" aria-label="Celeste &amp; Daniel" style="top: calc(1290 * var(--u))"></div>
+  <p class="txt3 rev" style="top: calc(1590 * var(--u))"><span>TE INVITAMOS A BAILAR</span><span>Y FESTEJAR CON NOSOTROS</span><span>LA NOCHE DE NUESTRA BODA</span></p>
+
+  <div class="fecha rev" style="top: calc(1830 * var(--u))" role="img" aria-label="Sábado 24 de octubre, desde las 22 horas">
+    <div class="fcol izq"><span class="fw f1">SÁBADO</span><span class="fn">24</span><span class="fw f3">OCTUBRE</span></div>
+    <div class="fraya"></div>
+    <div class="fcol der"><span class="fw f1">DESDE LAS</span><span class="fn">22</span><span class="fw f3">HORAS</span></div>
+  </div>
+
+  <section class="cuenta rev" style="top: calc(2090 * var(--u))" aria-label="Cuenta regresiva">
+    <div class="raya"></div>
+    <div class="titulo">FALTAN</div>
+    <div class="fila">
+      <div class="col"><span class="num" id="cd-d">00</span><span class="lbl">DÍAS</span></div>
+      <div class="col"><span class="num" id="cd-h">00</span><span class="lbl">HORAS</span></div>
+      <div class="col"><span class="num" id="cd-m">00</span><span class="lbl">MINUTOS</span></div>
+      <div class="col"><span class="num" id="cd-s">00</span><span class="lbl">SEGUNDOS</span></div>
+    </div>
+  </section>
+
+  <div class="m m05 rev" role="img" aria-label="Casa Puente, Mariano Roque Alonso, 2026" style="top: calc(2430 * var(--u))"></div>
+  <a class="pildora rev" href="https://www.google.com/maps/search/?api=1&amp;query=Casa+Puente+Avenida+Paseo+de+Fatima+464+Mariano+Roque+Alonso" target="_blank" rel="noopener"
+     style="left: calc(379.1 * var(--u)); width: calc(241.8 * var(--u)); top: calc(2633.3 * var(--u))" aria-label="Ver ubicación de Casa Puente en el mapa">VER UBICACIÓN</a>
+  <div class="m m07 oro rev" aria-hidden="true" style="top: calc(2780 * var(--u))"></div>
+  <div class="m m08 rev" role="img" aria-label="Tenida elegante" style="top: calc(2980 * var(--u))"></div>
+  <a class="pildora rev" href="#tenida" id="abrir-tenida" style="left: calc(379.1 * var(--u)); width: calc(241.8 * var(--u)); top: calc(3066.6 * var(--u))" aria-label="Ver detalles de la tenida">VER DETALLES</a>
+  <div class="m m09 linea rev" aria-hidden="true" style="top: calc(3180 * var(--u))"></div>
+
+  <div class="m m12 oro rev" role="img" aria-label="Lista de Bodas" style="top: calc(3290 * var(--u))"></div>
+  <a class="pildora rev" href="https://listaderegalos.nuevaamericana.com.py/3342" target="_blank" rel="noopener"
+     style="left: calc(350 * var(--u)); width: calc(300 * var(--u)); top: calc(3471 * var(--u))">NUEVA AMERICANA</a>
+  <a class="pildora rev" href="img/lista_pilar_v2.jpg" target="_blank" rel="noopener"
+     style="left: calc(350 * var(--u)); width: calc(300 * var(--u)); top: calc(3595 * var(--u))">PILAR</a>
+  <a class="pildora rev" href="https://tuboda.marketplace.com.py/lista/celeste-niz-y-daniel-kemper" target="_blank" rel="noopener"
+     style="left: calc(350 * var(--u)); width: calc(300 * var(--u)); top: calc(3719 * var(--u))">MARKET PLACE</a>
+  <div class="m m13 rev" role="img" aria-label="Banco GNB, alias C.I. 3.568.826, Daniel Kemper o Celeste Niz" style="top: calc(3848 * var(--u))"></div>
+
+  <div class="m m09 linea rev" aria-hidden="true" style="top: calc(4045 * var(--u))"></div>
+  <p class="txt3 rev" style="top: calc(4128 * var(--u))"><span>NOS VEMOS EN LA PISTA</span></p>
+  <div class="mono-fin rev" role="img" aria-label="Monograma C y D" style="top: calc(4255 * var(--u))"></div>
+</main>
+
+<div id="reflejos" aria-hidden="true">
+  <i style="--y:14%; --s:18px; --d:24s; --r:-3s;  --o:.50; --x:18vw"><b></b></i>
+  <i style="--y:31%; --s:13px; --d:19s; --r:-11s; --o:.46; --x:72vw"><b></b></i>
+  <i style="--y:46%; --s:24px; --d:29s; --r:-19s; --o:.40; --x:40vw"><b></b></i>
+  <i style="--y:59%; --s:15px; --d:22s; --r:-7s;  --o:.46; --x:86vw"><b></b></i>
+  <i style="--y:73%; --s:20px; --d:27s; --r:-15s; --o:.42; --x:9vw"><b></b></i>
+  <i style="--y:87%; --s:12px; --d:18s; --r:-4s;  --o:.50; --x:61vw"><b></b></i>
+  <i style="--y:23%; --s:11px; --d:16s; --r:-13s; --o:.44; --x:51vw"><b></b></i>
+</div>
+
+<!-- ================= Tenida elegante: vestidor (se abre con "Ver detalles"), igual a la oficial ================= -->
+<div id="tenida" role="dialog" aria-label="Tenida elegante" aria-hidden="true">
+  <div class="hoja">
+    <button class="volver" id="volver">‹ VOLVER</button>
+    <div class="t titulo" style="top: calc(140 * var(--u))">TENIDA ELEGANTE</div>
+    <div class="raya" style="top: calc(212 * var(--u))"></div>
+
+    <div class="armario" id="armario" role="button" aria-label="Abrir el vestidor">
+      <div class="fondo-armario"></div>
+      <img class="ropa" data-src="img/vestidor.jpg" alt="Vestidos largos y trajes en los colores sugeridos">
+      <button class="prenda" style="left:10%;  width:12.3%" data-n="VINO"        data-t="VESTIDO LARGO" aria-label="Vino, vestido largo"></button>
+      <button class="prenda" style="left:22.3%;width:10%"   data-n="OLIVA"       data-t="VESTIDO LARGO" aria-label="Oliva, vestido largo"></button>
+      <button class="prenda" style="left:32.3%;width:9.6%"  data-n="AZUL NOCHE"  data-t="VESTIDO LARGO" aria-label="Azul noche, vestido largo"></button>
+      <button class="prenda" style="left:41.9%;width:9.8%"  data-n="MALVA"       data-t="VESTIDO LARGO" aria-label="Malva, vestido largo"></button>
+      <button class="prenda" style="left:51.7%;width:10.8%" data-n="ARENA"       data-t="VESTIDO LARGO" aria-label="Arena, vestido largo"></button>
+      <button class="prenda" style="left:62.5%;width:11.9%" data-n="AZUL NOCHE"  data-t="TRAJE Y CORBATA" aria-label="Azul noche, traje y corbata"></button>
+      <button class="prenda" style="left:74.4%;width:13.9%" data-n="GRIS CARBÓN" data-t="TRAJE Y CORBATA" aria-label="Gris carbón, traje y corbata"></button>
+      <div class="etq" id="etq"></div>
+      <div class="puerta izq"><span class="manija"></span></div>
+      <div class="puerta der"><span class="manija"></span></div>
+    </div>
+    <div class="t pista" id="pista" style="top: calc(890 * var(--u))">TOCÁ PARA ABRIR EL VESTIDOR</div>
+
+    <div class="cols" style="top: calc(990 * var(--u))">
+      <div><span class="e">ELLAS</span><span class="p">VESTIDO LARGO</span></div>
+      <div><span class="e">ELLOS</span><span class="p">TRAJE Y CORBATA</span></div>
+    </div>
+    <div class="t" style="top: calc(1160 * var(--u)); font-size: calc(21 * var(--u))">SUGERENCIA DE COLORES</div>
+    <img class="paleta" data-src="img/paleta.jpg" alt="Paleta de colores sugeridos">
+    <div class="mono" style="top: calc(1500 * var(--u))"></div>
+  </div>
+</div>
+
+<script>
+  // ---------- Musica: Bailando Fue (Daddy Yankee) ----------
+  // Liviana (15-oct, misma logica que la rama "arreglos" de la oficial): al abrir la pagina NO se baja nada de audio.
+  // La cancion empieza a bajar cuando termino de cargar la invitacion (fondo + bloques = evento load) o al tocar, lo que
+  // pase primero, y se baja UNA sola vez.
+  // - Safari (iPhone, Mac): Cloudflare Pages no responde por rangos y Safari los pide para audio: se baja entera como blob.
+  //   Si tocan antes de que llegue, el toque "desbloquea" el audio con un silencio y la cancion arranca sola apenas llega.
+  // - Android y el resto: audio.src directo, suena mientras baja.
+  const CANCION = 'audio/bailando_fue.mp3';
+  const cancion = new Audio(), btnMusica = document.getElementById('musica');
+  cancion.loop = true; cancion.preload = 'auto';
+  const SILENCIO = 'data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==';
+  const ua = navigator.userAgent;
+  const esSafari = /iPad|iPhone|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) || (/Safari/.test(ua) && !/Chrome|Chromium|CriOS|FxiOS|Edg|OPR|Android/.test(ua));
+  let fuente = null, puesta = false, pedida = false, quiere = false, pausadaPorSalir = false, cancionLista = false;
+  function bajarCancion() {
+    if (pedida) return; pedida = true;
+    if (!esSafari) { fuente = CANCION; cancion.src = fuente; puesta = true; return; }   // empieza a bajar; si ya tocaron, sonar() le da play
+    fetch(CANCION, { priority: 'low' }).then(r => r.ok ? r.blob() : Promise.reject())
+      .then(b => { fuente = URL.createObjectURL(b); }, () => { fuente = CANCION; })   // sin blob: intento directo
+      .then(() => { cancionBajada(); if (quiere) arrancar(); });
+  }
+  function arrancar() {
+    if (!puesta) { cancion.src = fuente; puesta = true; }
+    if (document.hidden) { pausadaPorSalir = true; return; }
+    const p = cancion.play(); if (p && p.catch) p.catch(() => btnMusica.classList.add('pausada'));
+  }
+  function sonar() {                                  // siempre se llama desde un toque
+    quiere = true;
+    bajarCancion();
+    if (fuente) return arrancar();
+    if (!puesta) { cancion.src = SILENCIO; const p = cancion.play(); if (p && p.catch) p.catch(() => {}); }   // Safari: desbloqueo
+  }
+  if (document.readyState === 'complete') bajarCancion(); else addEventListener('load', bajarCancion, { once: true });
+  // Android y el resto: la cancion termino de bajar cuando lo guardado cubre toda la duracion
+  function revisarBuffer() {
+    if (esSafari || cancionLista || !cancion.duration || cancion.src.indexOf('data:') === 0) return;
+    const b = cancion.buffered; if (b.length && b.end(b.length - 1) >= cancion.duration - .5) cancionBajada();
+  }
+  ['progress', 'suspend', 'canplaythrough', 'loadeddata'].forEach(ev => cancion.addEventListener(ev, revisarBuffer));
+  cancion.addEventListener('error', () => { if (!esSafari && puesta) cancionBajada(); });
+  cancion.addEventListener('play', () => btnMusica.classList.remove('pausada'));
+  cancion.addEventListener('pause', () => btnMusica.classList.add('pausada'));
+  btnMusica.addEventListener('click', () => { if (cancion.paused) sonar(); else { quiere = false; cancion.pause(); } });
+  document.addEventListener('visibilitychange', () => {       // no sigue sonando en el bolsillo; vuelve al volver
+    if (document.hidden && !cancion.paused) { pausadaPorSalir = true; cancion.pause(); }
+    else if (!document.hidden && pausadaPorSalir) { pausadaPorSalir = false; if (quiere) sonar(); }
+  });
+  // Vestidor: sus imagenes se bajan al abrir "Ver detalles" o cuando la pagina quedo quieta (8 s despues de que termino
+  // de bajar la musica y con el navegador libre), nunca antes de tocar
+  let tenidaProgramada = false;
+  function cancionBajada() { cancionLista = true; programarTenida(); }
+  function programarTenida() {
+    if (tenidaProgramada || !cancionLista || !abierto) return; tenidaProgramada = true;
+    setTimeout(() => { if (window.requestIdleCallback) requestIdleCallback(cargarTenida, { timeout: 4000 }); else cargarTenida(); }, 8000);
+  }
+  if ('mediaSession' in navigator) navigator.mediaSession.metadata = new MediaMetadata({ title: 'Bailando Fue', artist: 'Daddy Yankee', album: 'Celeste & Daniel · 24.10.2026' });
+
+  // ---------- La bola de espejos (canvas 2D propio) ----------
+  const bola = (() => {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const escena = document.getElementById('escena'), cv = document.getElementById('bola'), cx = cv.getContext('2d');
+    const dcv = document.getElementById('destellos'), dx = dcv.getContext('2d');
+    const E = { rot: .4, vel: 0, velObj: 0, pow: 0, powObj: 0, t: 0 };
+    const VEL_FIESTA = 2 * Math.PI / 12, VEL_SALON = 2 * Math.PI / 24;
+    const norm = (x, y, z) => { const l = Math.hypot(x, y, z); return [x / l, y / l, z / l]; };
+    const suave = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+    const L = norm(-.55, .69, .48);   // el haz llega de arriba a la izquierda, como la luz del relieve del lacre
+    const LO = norm(.18, .86, .46);   // luz tenue del salon (bola apagada)
+    const TILT = -.16, cT = Math.cos(TILT), sT = Math.sin(TILT);   // la vemos un poco desde abajo
+    let semilla = 20261024; const rnd = () => (semilla = semilla * 16807 % 2147483647) / 2147483647;
+
+    // espejitos: bandas de latitud, cada una corrida como en una bola real
+    const BANDAS = 22, NEQ = 46, tiles = [];
+    for (let b = 0; b < BANDAS; b++) {
+      const f1 = -Math.PI / 2 + b * Math.PI / BANDAS, f2 = f1 + Math.PI / BANDAS, fc = (f1 + f2) / 2;
+      const n = Math.max(5, Math.round(NEQ * Math.cos(fc))), d0 = rnd() * 2 * Math.PI / n;
+      for (let k = 0; k < n; k++) tiles.push({
+        cf1: Math.cos(f1), sf1: Math.sin(f1), cf2: Math.cos(f2), sf2: Math.sin(f2), cfc: Math.cos(fc), sfc: Math.sin(fc),
+        l1: d0 + k * 2 * Math.PI / n, l2: d0 + (k + 1) * 2 * Math.PI / n,
+        jx: (rnd() - .5) * .13, jy: (rnd() - .5) * .13, k: .7 + rnd() * .6, ph: rnd() * 6.283
+      });
+    }
+    // puntos de luz en las paredes (entrada)
+    const SPOTS = []; for (let i = 0; i < 120; i++) SPOTS.push({ a: rnd() * 6.283, y: .02 + rnd() * .96, s: 2.4 + rnd() * 5, k: .5 + rnd() * .5, ph: rnd() * 6.283 });
+    // motas de polvo en el haz
+    const MOTAS = []; for (let i = 0; i < 18; i++) MOTAS.push({ s: .5 + rnd() * .47, l: rnd() * 2 - 1, v: .006 + rnd() * .012, ph: rnd() * 6.283, r: .9 + rnd() * 1.3 });
+
+    // sprites prerenderizados
+    const lienzo = (w, h) => { const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(w)); c.height = Math.max(1, Math.round(h)); return c; };
+    const SPR = lienzo(64, 64); {
+      const g = SPR.getContext('2d'), r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+      r.addColorStop(0, 'rgba(255,249,236,1)'); r.addColorStop(.2, 'rgba(255,232,186,.92)'); r.addColorStop(.46, 'rgba(247,200,115,.3)'); r.addColorStop(1, 'rgba(247,200,115,0)');
+      g.fillStyle = r; g.fillRect(0, 0, 64, 64);
+    }
+    const ESTRELLA = lienzo(96, 96); {
+      const g = ESTRELLA.getContext('2d');
+      const rayo = (rot) => { g.save(); g.translate(48, 48); g.rotate(rot); g.scale(1, .06); const r = g.createRadialGradient(0, 0, 0, 0, 0, 48);
+        r.addColorStop(0, 'rgba(255,250,238,1)'); r.addColorStop(.35, 'rgba(255,236,200,.5)'); r.addColorStop(1, 'rgba(255,236,200,0)'); g.fillStyle = r; g.beginPath(); g.arc(0, 0, 48, 0, 6.283); g.fill(); g.restore(); };
+      rayo(0); rayo(Math.PI / 2);
+      const c = g.createRadialGradient(48, 48, 0, 48, 48, 12); c.addColorStop(0, 'rgba(255,252,244,1)'); c.addColorStop(1, 'rgba(255,236,200,0)'); g.fillStyle = c; g.fillRect(36, 36, 24, 24);
+    }
+
+    let G = null, HAZ = null, CADENA = null, TAPA = null, TAPA_OSC = null, D = null;
+    function medir() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2), r = escena.getBoundingClientRect();
+      if (G && Math.abs(G.cssW - r.width) < .5) return;
+      cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+      const u = cv.width / 1000;
+      // mArr/mAba = bordes del lacre (.medallon: top 120u, 110u); tapa = casquete bronce en el polo de la bola (cy - R = 345u)
+      G = { cssW: r.width, u, w: cv.width, h: cv.height, cx: 500 * u, cy: 600 * u, R: 255 * u, mArr: 120 * u, mAba: 230 * u, tapa: 345 * u, S: [-200 * u, -300 * u] };
+      G.top = G.tapa - 21 * u;   // la cadena llega hasta la argollita de la tapa
+      // haz de luz (capas superpuestas = bordes suaves sin filtros)
+      HAZ = lienzo(G.w, G.h); {
+        const g = HAZ.getContext('2d'), S = G.S, B = [G.cx, G.cy], vx = B[0] - S[0], vy = B[1] - S[1], len = Math.hypot(vx, vy), nx = -vy / len, ny = vx / len;
+        const gr = g.createLinearGradient(S[0], S[1], B[0], B[1]);
+        gr.addColorStop(0, 'rgba(255,226,178,0)'); gr.addColorStop(.22, 'rgba(255,226,178,0)'); gr.addColorStop(.6, 'rgba(255,228,184,.42)'); gr.addColorStop(1, 'rgba(255,234,200,1)');
+        g.fillStyle = gr; g.globalAlpha = .052;
+        for (let i = 0; i < 10; i++) {
+          const w0 = G.R * (.025 + i * .01), w1 = G.R * (.2 + i * .082);
+          g.beginPath(); g.moveTo(S[0] + nx * w0, S[1] + ny * w0); g.lineTo(B[0] + nx * w1, B[1] + ny * w1); g.lineTo(B[0] - nx * w1, B[1] - ny * w1); g.lineTo(S[0] - nx * w0, S[1] - ny * w0); g.closePath(); g.fill();
+        }
+        G.nx = nx; G.ny = ny;
+      }
+      // cadenita bronce
+      const cw = 40 * u; CADENA = lienzo(cw, G.top + 12 * u); {
+        const g = CADENA.getContext('2d'), m = cw / 2, paso = 21 * u, lw = Math.max(1, 2.8 * u);
+        const met = g.createLinearGradient(m - 8 * u, 0, m + 8 * u, 0);
+        met.addColorStop(0, '#6f5536'); met.addColorStop(.35, '#e6cfa2'); met.addColorStop(.6, '#a8865c'); met.addColorStop(1, '#5d4529');
+        g.strokeStyle = met; g.fillStyle = met; g.lineWidth = lw;
+        let i = 0;
+        for (let y = -paso; y < G.top - 4 * u; y += paso, i++) {
+          if (i % 2) { g.beginPath(); g.ellipse(m, y + paso / 2, 6.2 * u, paso * .62, 0, 0, 6.283); g.stroke(); }
+          else { g.beginPath(); g.roundRect ? g.roundRect(m - 1.7 * u, y - 1 * u, 3.4 * u, paso + 2 * u, 1.7 * u) : g.rect(m - 1.7 * u, y - 1 * u, 3.4 * u, paso + 2 * u); g.fill(); }
+        }
+        // argollas donde la cadena entra y sale del lacre (la mitad queda tapada por el medallon)
+        g.lineWidth = lw * 1.25;
+        g.beginPath(); g.ellipse(m, G.mArr + 2 * u, 7 * u, 8.5 * u, 0, 0, 6.283); g.stroke();
+        g.beginPath(); g.ellipse(m, G.mAba - 2 * u, 7 * u, 8.5 * u, 0, 0, 6.283); g.stroke();
+      }
+      // tapa bronce en el polo de la bola: argollita + casquete corto (se dibuja encima de la esfera)
+      const tw = 40 * u, th = 34 * u; TAPA = lienzo(tw, th); {
+        const g = TAPA.getContext('2d'), m = tw / 2, lw = Math.max(1, 2.6 * u);
+        const met = g.createLinearGradient(m - 13 * u, 0, m + 13 * u, 0);
+        met.addColorStop(0, '#5d4529'); met.addColorStop(.32, '#e6cfa2'); met.addColorStop(.6, '#a8865c'); met.addColorStop(1, '#4e3a22');
+        g.strokeStyle = met; g.lineWidth = lw;
+        g.beginPath(); g.ellipse(m, 12 * u, 5.5 * u, 7.5 * u, 0, 0, 6.283); g.stroke();
+        g.fillStyle = met;
+        g.beginPath(); g.rect(m - 13 * u, 17 * u, 26 * u, 9 * u); g.ellipse(m, 26 * u, 13 * u, 3.6 * u, 0, 0, Math.PI); g.fill();
+        g.strokeStyle = 'rgba(40, 28, 16, .55)'; g.lineWidth = Math.max(.75, 1 * u);
+        g.beginPath(); g.ellipse(m, 26 * u, 13 * u, 3.6 * u, 0, 0, Math.PI); g.stroke();
+      }
+      TAPA_OSC = lienzo(tw, th); {
+        const g = TAPA_OSC.getContext('2d'); g.drawImage(TAPA, 0, 0);
+        g.globalCompositeOperation = 'source-atop'; g.fillStyle = 'rgba(3, 6, 26, .38)'; g.fillRect(0, 0, tw, th);
+      }
+    }
+    function medirDestellos() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5), w = innerWidth, h = innerHeight;
+      dcv.width = Math.round(w * dpr); dcv.height = Math.round(h * dpr);
+      D = { w: dcv.width, h: dcv.height, k: Math.min(w, h * .8) / 390 * dpr };
+    }
+
+    function dibujarBola() {
+      const g = cx, P = E.pow, R = G.R, t = E.t;
+      g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, G.w, G.h);
+      if (P > .004) {
+        g.globalCompositeOperation = 'lighter';
+        g.globalAlpha = P; g.drawImage(HAZ, 0, 0);
+        const gl = g.createRadialGradient(G.cx, G.cy, R * .96, G.cx, G.cy, R * 1.4);
+        gl.addColorStop(0, 'rgba(255,214,160,.11)'); gl.addColorStop(1, 'rgba(255,214,160,0)');
+        g.fillStyle = gl; g.fillRect(G.cx - R * 1.45, G.cy - R * 1.45, R * 2.9, R * 2.9);
+        g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+      }
+      g.drawImage(CADENA, G.cx - CADENA.width / 2, 0);
+      g.fillStyle = '#03061a'; g.beginPath(); g.arc(G.cx, G.cy, R, 0, 6.283); g.fill();
+
+      const brillos = [];
+      for (const q of tiles) {
+        const a = q.l1 + E.rot, b = q.l2 + E.rot, c = (a + b) / 2;
+        // centro (para descartar la cara de atras rapido)
+        const cxn = q.cfc * Math.sin(c), cyn = q.sfc, czn = q.cfc * Math.cos(c);
+        const zc = cyn * sT + czn * cT; if (zc < .05) continue;
+        const yc = cyn * cT - czn * sT;
+        const sa = Math.sin(a), ca = Math.cos(a), sb = Math.sin(b), cb = Math.cos(b);
+        const X = [q.cf1 * sa, q.cf1 * sb, q.cf2 * sb, q.cf2 * sa], Y0 = [q.sf1, q.sf1, q.sf2, q.sf2], Z0 = [q.cf1 * ca, q.cf1 * cb, q.cf2 * cb, q.cf2 * ca];
+        const px = [], py = []; let mx = 0, my = 0;
+        for (let i = 0; i < 4; i++) { const Y = Y0[i] * cT - Z0[i] * sT; px[i] = G.cx + R * X[i]; py[i] = G.cy - R * Y; mx += px[i]; my += py[i]; }
+        mx /= 4; my /= 4;
+        // espejito un poco torcido: cada uno refleja distinto
+        const n = norm(cxn + q.jx, yc + q.jy, zc), nx = n[0], ny = n[1], nz = n[2];
+        const rx = 2 * nz * nx, ry = 2 * nz * ny, rz = 2 * nz * nz - 1;
+        const dL = rx * L[0] + ry * L[1] + rz * L[2], dO = rx * LO[0] + ry * LO[1] + rz * LO[2];
+        const az = Math.atan2(rx, rz);
+        let amb = (.15 + .07 * ry + .08 * Math.sin(az * 4 + ry * 3 + q.ph)) * q.k; if (amb < .03) amb = .03;
+        const off = dO > 0 ? Math.pow(dO, 8) * .6 : 0;
+        const spec = dL > 0 ? Math.pow(dL, 34) : 0, halo = dL > 0 ? Math.pow(dL, 5) : 0;
+        const cat = P * Math.pow(Math.max(0, Math.sin(az * 9 + ry * 6 + q.ph * 3)), 14);   // espejitos que agarran otras luces del salon
+        const A = amb * (1 + 1.5 * P) + off * (1 - .3 * P), lim = .5 + .5 * zc;
+        const r = 255 * lim * (A * .8 + P * (halo * .55 + spec * 1.3) + cat * .95);
+        const gg = 255 * lim * (A * .87 + P * (halo * .45 + spec * 1.18) + cat * .8);
+        const bb = 255 * lim * (A * 1.02 + P * (halo * .32 + spec * 1) + cat * .58);
+        g.fillStyle = 'rgb(' + (r > 255 ? 255 : r | 0) + ',' + (gg > 255 ? 255 : gg | 0) + ',' + (bb > 255 ? 255 : bb | 0) + ')';
+        const s = .86;
+        g.beginPath(); g.moveTo(mx + (px[0] - mx) * s, my + (py[0] - my) * s);
+        for (let i = 1; i < 4; i++) g.lineTo(mx + (px[i] - mx) * s, my + (py[i] - my) * s);
+        g.closePath(); g.fill();
+        const fuerza = (zc > .25 ? P * spec + cat * .7 : 0) + (1 - P) * off * Math.max(0, Math.sin(t * .8 + q.ph * 7) - .94) * 9;
+        if (fuerza > .35) brillos.push([fuerza, mx, my]);
+      }
+      // sombreado del borde (la esfera se lee como esfera)
+      g.save(); g.beginPath(); g.arc(G.cx, G.cy, R, 0, 6.283); g.clip();
+      const sh = g.createRadialGradient(G.cx - R * .28, G.cy - R * .32, R * .35, G.cx, G.cy, R * 1.02);
+      sh.addColorStop(0, 'rgba(3,6,22,0)'); sh.addColorStop(.72, 'rgba(3,6,22,.08)'); sh.addColorStop(1, 'rgba(3,6,22,.5)');
+      g.fillStyle = sh; g.fillRect(G.cx - R, G.cy - R, R * 2, R * 2); g.restore();
+      // tapa bronce del polo (apagada mas oscura; con el haz toma su brillo)
+      const tx = G.cx - TAPA.width / 2, ty = G.tapa - 26 * G.u;
+      g.drawImage(TAPA_OSC, tx, ty);
+      if (P > .004) { g.globalAlpha = P; g.drawImage(TAPA, tx, ty); g.globalAlpha = 1; }
+      // destellos en los espejitos que agarran el haz (pocos y cortos)
+      if (brillos.length) {
+        brillos.sort((p, q) => q[0] - p[0]); g.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < Math.min(3, brillos.length); i++) {
+          const [f, x, y] = brillos[i], tam = R * (.08 + .14 * Math.min(1, f)) * (.75 + .25 * Math.sin(t * 6 + x));
+          g.globalAlpha = Math.min(1, f) * .6; g.drawImage(ESTRELLA, x - tam, y - tam, tam * 2, tam * 2);
+        }
+        g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+      }
+      // polvo flotando en el haz
+      if (P > .02) {
+        g.globalCompositeOperation = 'lighter'; g.fillStyle = 'rgb(255,240,214)';
+        const S = G.S, vx = G.cx - S[0], vy = G.cy - S[1];
+        for (const m of MOTAS) {
+          const hw = R * (.06 + .52 * m.s), off = m.l * hw * .82 + Math.sin(t * .6 + m.ph) * 4 * G.u;
+          const x = S[0] + vx * m.s + G.nx * off, y = S[1] + vy * m.s + G.ny * off;
+          g.globalAlpha = P * .55 * suave(.5, .68, m.s) * (1 - Math.abs(m.l) * .55) * (1 - suave(.9, .97, m.s));
+          g.beginPath(); g.arc(x, y, m.r * G.u, 0, 6.283); g.fill();
+        }
+        g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+      }
+    }
+
+    function dibujarDestellos() {
+      const g = dx; g.clearRect(0, 0, D.w, D.h);
+      const P2 = suave(.28, 1, E.pow); if (P2 <= 0) return;
+      g.globalCompositeOperation = 'lighter';
+      const W2 = D.w / 2, esc = D.w * .36;
+      for (const s of SPOTS) {
+        const ang = s.a + 2 * E.rot, c = Math.cos(ang); if (c < .2) continue;
+        const x = W2 + Math.tan(ang) * esc; if (x < -40 || x > D.w + 40) continue;
+        const r = s.s * D.k, sx = Math.min(2.3, 1 / c);
+        g.globalAlpha = P2 * s.k * suave(.2, .5, c) * (.78 + .22 * Math.sin(E.t * 2.4 + s.ph));
+        g.drawImage(SPR, x - r * sx * 2, s.y * D.h - r * 2, r * sx * 4, r * 4);
+      }
+      g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
+    }
+
+    let raf = 0, ultimo = 0, bolaVisible = true, tapada = false, destellosVivos = true;
+    function pedir() { if (!raf && !document.hidden) raf = requestAnimationFrame(cuadro); }
+    function cuadro(now) {
+      raf = 0;
+      const dt = ultimo ? Math.min(.05, (now - ultimo) / 1000) : 1 / 60; ultimo = now;
+      E.t += dt;
+      E.pow += (E.powObj - E.pow) * (1 - Math.exp(-dt * 1.9));
+      E.vel += (E.velObj - E.vel) * (1 - Math.exp(-dt * 1.2));
+      if (!reduce) { E.rot += E.vel * dt; for (const m of MOTAS) { m.s += m.v * dt; if (m.s > .97) { m.s = .5; m.l = rnd() * 2 - 1; } } }
+      const verBola = bolaVisible && !tapada;
+      if (verBola) dibujarBola();
+      if (destellosVivos) dibujarDestellos();
+      const sigue = !reduce || Math.abs(E.powObj - E.pow) > .003;
+      if ((verBola || destellosVivos) && sigue) pedir(); else ultimo = 0;
+    }
+    medir(); medirDestellos(); dibujarBola(); pedir();
+    if ('IntersectionObserver' in window) new IntersectionObserver(es => { bolaVisible = es[0].isIntersecting; if (bolaVisible) pedir(); }).observe(escena);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { ultimo = 0; pedir(); } });
+    let tr = 0; addEventListener('resize', () => { clearTimeout(tr); tr = setTimeout(() => { medir(); if (destellosVivos) medirDestellos(); ultimo = 0; pedir(); }, 120); });
+    return {
+      encender() { E.powObj = 1; E.velObj = VEL_FIESTA; ultimo = 0; pedir(); },
+      calmar() { destellosVivos = false; E.velObj = VEL_SALON; },
+      tapar(v) { tapada = v; if (!v) { ultimo = 0; pedir(); } },
+      E
+    };
+  })();
+
+  // ---------- Entrada: tocar enciende la bola ----------
+  const intro = document.getElementById('intro');
+  let abierto = false;
+  function abrir() {
+    if (abierto) return; abierto = true;
+    sonar(); btnMusica.classList.add('ver');                       // la musica arranca con el toque (requisito de iPhone)
+    intro.classList.add('encendida'); document.body.classList.add('encendida');
+    bola.encender();                                                 // se prende el haz, la bola gira y tira puntos de luz
+    setTimeout(() => { intro.classList.add('fuera'); document.body.classList.remove('cerrado'); document.body.classList.add('abierta'); window.scrollTo(0, 0); revisar(); }, 2400);
+    setTimeout(() => { intro.remove(); bola.calmar(); document.body.classList.add('lista'); }, 3600);
+    programarTenida();                                               // deja listo el vestidor de "Ver detalles" (cuando la pagina quedo quieta)
+  }
+  intro.addEventListener('click', abrir);
+  intro.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); } });
+
+  // ---------- Aparicion suave al bajar (en cascada cuando entran varios juntos) ----------
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => {
+    let i = 0;
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target; el.style.transitionDelay = (i++ * .11) + 's'; el.classList.add('vis'); io.unobserve(el);
+      setTimeout(() => { el.style.transitionDelay = ''; }, 1800);
+    });
+  }, { threshold: 0.12 }) : null;
+  function revisar() { document.querySelectorAll('.rev').forEach(el => io ? io.observe(el) : el.classList.add('vis')); }
+
+  // ---------- Tenida elegante (vestidor) ----------
+  const tenida = document.getElementById('tenida'), armario = document.getElementById('armario'), etq = document.getElementById('etq'), pista = document.getElementById('pista');
+  function cargarTenida() {            // las imagenes del vestidor se bajan recien despues de abrir el sobre
+    if (tenida.classList.contains('cargado')) return;
+    tenida.classList.add('cargado');
+    tenida.querySelectorAll('img[data-src]').forEach(im => im.src = im.dataset.src);
+  }
+  function cerrarArmario() { armario.classList.remove('abierto'); etq.classList.remove('ver'); pista.textContent = 'TOCÁ PARA ABRIR EL VESTIDOR'; }
+  function verTenida(v) {
+    tenida.classList.toggle('ver', v); tenida.setAttribute('aria-hidden', v ? 'false' : 'true'); document.body.style.overflow = v ? 'hidden' : '';
+    if (v) { cargarTenida(); tenida.scrollTop = 0; } else setTimeout(cerrarArmario, 400);
+  }
+  // el boton "atras" del celular cierra el vestidor en vez de salir de la invitacion
+  function salir() { if (history.state && history.state.tenida) history.back(); else verTenida(false); }
+  document.getElementById('abrir-tenida').addEventListener('click', e => { e.preventDefault(); history.pushState({ tenida: 1 }, '', '#tenida'); verTenida(true); });
+  window.addEventListener('popstate', () => verTenida(!!(history.state && history.state.tenida)));
+  document.getElementById('volver').addEventListener('click', salir);
+  tenida.addEventListener('click', e => { if (e.target === tenida) salir(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && tenida.classList.contains('ver')) salir(); });
+  armario.addEventListener('click', e => {
+    if (!armario.classList.contains('abierto')) { armario.classList.add('abierto'); pista.textContent = 'TOCÁ CADA PRENDA'; return; }
+    const b = e.target.closest('.prenda'); if (!b) return;
+    const r = b.getBoundingClientRect(), a = armario.getBoundingClientRect();
+    etq.innerHTML = b.dataset.n + '<small>' + b.dataset.t + '</small>';
+    etq.style.left = ((r.left + r.width / 2 - a.left) / a.width * 100) + '%';
+    etq.classList.remove('ver'); void etq.offsetWidth; etq.classList.add('ver');
+  });
+
+  // ---------- Pausas: con la pestana oculta o el vestidor abierto, la luz se queda quieta ----------
+  function quietud() {
+    const tapada = tenida.classList.contains('ver');
+    document.documentElement.classList.toggle('quieto', document.hidden || tapada);
+    bola.tapar(tapada);
+  }
+  document.addEventListener('visibilitychange', quietud);
+  new MutationObserver(quietud).observe(tenida, { attributes: true, attributeFilter: ['class'] });
+
+  // link directo al vestidor (.../#tenida): se abre arriba de la entrada y VOLVER lleva a la entrada
+  if (location.hash === '#tenida') {
+    history.replaceState(null, '', location.pathname + location.search);
+    history.pushState({ tenida: 1 }, '', '#tenida'); verTenida(true);
+  }
+
+  // ---------- Cuenta regresiva (24-oct-2026, 22:00 hora de Paraguay) ----------
+  const objetivo = new Date('2026-10-24T22:00:00-03:00').getTime();
+  const dos = n => String(n).padStart(2, '0');
+  function tic() {
+    const s = Math.max(0, Math.floor((objetivo - Date.now()) / 1000));
+    document.getElementById('cd-d').textContent = dos(Math.floor(s / 86400));
+    document.getElementById('cd-h').textContent = dos(Math.floor(s % 86400 / 3600));
+    document.getElementById('cd-m').textContent = dos(Math.floor(s % 3600 / 60));
+    document.getElementById('cd-s').textContent = dos(s % 60);
+  }
+  tic(); setInterval(tic, 1000);
+</script>
+</body>
+</html>
